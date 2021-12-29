@@ -36,7 +36,7 @@ export default function FormularioTurma() {
             <Form className='Form' ref={refForm} onSubmit={onSubmit}>
 
                 <div className="div-card">
-                    <NavLink to="/" className="voltar"><BiArrowBack /> Voltar</NavLink>
+                    <NavLink to="/dashboard" className="voltar"><BiArrowBack /> Voltar</NavLink>
                     <div className='container-card'>
                         <div>
                             <h1 className="title">Cadastro de turma</h1>
@@ -74,13 +74,6 @@ export default function FormularioTurma() {
                                 placeholder='Turma'
                                 required={true}
                             />
-                        </div>
-                        <div className="cadastro-form">
-                            <select id='drop' className='dropdown'>
-                                <option value="Selecione" selected disabled>Selecione</option>
-                                <option value="Aluno">Aluno</option>
-                                <option  value="Professor">Professor</option>
-                            </select>
                         </div>
                         <div className="cadastro-form">
                             <Input

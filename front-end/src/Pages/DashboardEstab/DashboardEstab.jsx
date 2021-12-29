@@ -1,11 +1,10 @@
 import React from "react";
-import Sidebar from "../../Components/sideBar/SideBar";
 
+import Sidebar from "../../Components/sideBar/SideBar.jsx";
 
 
 function Dashboard() {
 
-    let typeClass = 'black';
     return (
         <>
             <Sidebar />

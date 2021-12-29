@@ -104,7 +104,7 @@ function ListaProfessores(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          <Button href="/cadastro" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
+          <Button href="/dashboard" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
         </UIContainer>
       </>
     )

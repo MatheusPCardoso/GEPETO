@@ -4,7 +4,6 @@ import { BsFillPeopleFill, BsDoorOpenFill, BsFillKanbanFill } from "react-icons/
 
 
 import './sidebar.css';
-import './sidebar.js'
 
 const Sidebar = () => {
 
@@ -70,17 +69,7 @@ const Sidebar = () => {
                         <span class="tooltip">Cadastro Professores</span>
                     </li>
                     <li>
-                        <a href="/cadastro/turmas">
-                            <div className="imagem">
-                                <BsDoorOpenFill />
-                            </div>
-
-                            <span class="links_name">Cadastro Turmas</span>
-                        </a>
-                        <span class="tooltip">Cadastro Turmas</span>
-                    </li>
-                    <li>
-                        <a href="/cadastro/turmas">
+                        <a href="/cadastro/turma">
                             <div className="imagem">
                                 <BsDoorOpenFill />
                             </div>
