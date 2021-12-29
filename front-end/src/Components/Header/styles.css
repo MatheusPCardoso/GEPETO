@@ -1,0 +1,19 @@
+.topo1 {
+  height: 10vh;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c4c4c4;
+}
+  
+.header h2 {
+  font-size: 32px;
+}
+
+@media screen and (max-width: 767px) {
+  .topo1{
+    text-align: center;
+    padding: 5px;
+  }
+}
