@@ -58,7 +58,7 @@ function ListaAluno(props) {
   }
   
   return (
-    <_Table status={status} person={alunos} func1={deletaAluno} func2={updateAluno}/>
+    <_Table title={['Turma', 'Username', 'Nome']} row={['turma', 'username','nome']} person={alunos} status={status} func1={deletaAluno} func2={updateAluno}/>
   )
 
 }

@@ -1,13 +1,7 @@
-import { Paper, TableBody, TableCell, TableContainer } from '@material-ui/core';
-import React, { useEffect, useState} from 'react';
-import { Table } from 'react-bootstrap';
+import React, { useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import UIContainer from '../../Components/Container/container';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { fetchTurmas, selectAllTurmas, deleteTurmaServer, updateTurmaServer } from '../../shared/TurmasSlice'
-import Button from 'react-bootstrap/Button';
-import { useHistory } from 'react-router';
+import _Table from '../../Components/Table/Table';
 
 
 function ListaTurma(props) {
@@ -52,86 +46,10 @@ function ListaTurma(props) {
   function deletaTurma(id) {
     dispatch(deleteTurmaServer(id))
   }
-
-  if (turmas.length != 0) {
-    return (
-      <>
-        <UIContainer>
-          <TableContainer component={Paper}>
-            <Table className="table-hover">
-              <TableHead>
-                <TableRow>
-                  <TableCell >Turma</TableCell>
-                  <TableCell >Nome</TableCell>
-                  <TableCell >Data de Inicio</TableCell>
-                  <TableCell >Data de Fim</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {turmas.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell component="th" scope="row" className="turma">
-                      {row.turma}
-                    </TableCell>
-                    <TableCell className="username" contentEditable="true">{row.nome}</TableCell>
-                    <TableCell contentEditable="true">{row.dataInicio.split('T')[0]}</TableCell>
-                    <TableCell contentEditable="true">{row.dataFim.split('T')[0]}</TableCell>
-                    <TableCell><Button variant="danger" type="submit" onClick={() => deletaTurma(row.id)}>Apagar</Button></TableCell>
-                    <TableCell><Button variant="primary" type="submit" onClick={() => updateTurma(row)}>Editar  </Button></TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Button href="/cadastro" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
-        </UIContainer>
-      </>
-    )
-  }
-  else if(turmas.length == 0) {
-    return (
-      <>
-        <UIContainer>
-          <TableContainer component={Paper}>
-            <Table className="table-hover">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableCell align="center"><h1>Lista Vazia!</h1></TableCell>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Button href="/cadastro" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
-        </UIContainer>
-      </>
-    )
-  }
-  else{
-    return (
-      <>
-        <UIContainer>
-          <TableContainer component={Paper}>
-            <Table className="table-hover">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableCell align="center"><h1>Error: {error}</h1></TableCell>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Button href="/cadastro" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
-        </UIContainer>
-      </>
-    )
-  }
+  console.log(turmas)
+  return (
+    <_Table title={['Turma', 'Nome','Professor', 'Alunos']} row={['turma','nome','professor']} person={turmas} status={status} func1={deletaTurma} func2={turmas}/>
+  )
 
 
 }

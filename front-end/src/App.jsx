@@ -26,7 +26,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <NavBar usuario={user}/>
+        {/* <NavBar usuario={user}/> */}
         <Switch>
           <Route path="/lista/professores"><ListaProfessores/></Route>
           <Route path="/dashboard"><Dashboard/></Route>

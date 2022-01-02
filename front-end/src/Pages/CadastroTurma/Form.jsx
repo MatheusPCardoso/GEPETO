@@ -1,6 +1,10 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllProfessores, fetchProfessores } from '../../shared/ProfessoresSlice'
+import { addTurmaServer } from '../../shared/TurmasSlice'
 
-import './Form.css' 
+
+import './Form.css'
 
 import { Form } from '@unform/web'
 import Input from '../../Components/Form/Input'
@@ -12,21 +16,36 @@ export default function FormularioTurma() {
 
     //const [isClass, setClass] = useState(false);
 
+    const professores = useSelector(selectAllProfessores)
+    const status = useSelector(state => state.professores.status);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (status === 'not_loaded') {
+            dispatch(fetchProfessores())
+        } else if (status === 'failed') {
+            setTimeout(() => dispatch(fetchProfessores()), 5000);
+        }
+    }, [status, dispatch])
+
     const refForm = useRef(null); //Referencia do formulario no HTML
 
     function onSubmit(data) {
-	    var value = document.getElementById('drop')
-                .options[document
-                .getElementById('drop')
+        var value = document.getElementById('professor')
+            .options[document
+                .getElementById('professor')
                 .selectedIndex].value;
-        console.log(data)
-        /* if (value == "Aluno") {
-            console.log("INSERIU COMO ALUNO");
-            //insertAluno(data);
-        } else if (value == "Professor") {
-            console.log("INSERIU COMO PROFESSOR");
-            //insertProfessor(data);
-        } */
+        
+        value == 'Select' ? value = '' : null
+
+        data.professor = value;
+        
+        async function insertTurma(turma){
+            dispatch(addTurmaServer(turma)).then((res) => console.log('turma criado!'))
+        }
+
+        insertTurma(data)
 
         refForm.current.reset();
     }
@@ -55,45 +74,42 @@ export default function FormularioTurma() {
                         </div>
                         <div className="cadastro-form">
                             <Input
-                                name='matricula'
-                                id='matricula'
+                                name='turma'
+                                id='turma'
                                 type='text'
                                 autoComplete='off'
                                 className='form-control'
-                                placeholder='Matricula'
+                                placeholder='IDTurma'
+                                required={true}
+                            />
+                        </div>
+                        <div className="cadastro-form">
+                            <select name="professor" id="professor">
+                                <option value="Select" selected disabled>Selecione</option>
+                                {professores.map((professor) => (
+                                    <option>{professor.nome}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="cadastro-form">
+                            <Input
+                                name='dataInicio'
+                                id='dataInicio'
+                                type='text'
+                                className='form-control'
+                                autoComplete='off'
+                                placeholder='DD/MM/AAAA'
                                 required={true}
                             />
                         </div>
                         <div className="cadastro-form">
                             <Input
-                                name='idTurma'
-                                id='idTurma'
+                                name='dataFim'
+                                id='dataFim'
                                 type='text'
                                 className='form-control'
                                 autoComplete='off'
-                                placeholder='Turma'
-                                required={true}
-                            />
-                        </div>
-                        <div className="cadastro-form">
-                            <Input
-                                name='username'
-                                id='username'
-                                className='form-control'
-                                type='text'
-                                autoComplete='off'
-                                placeholder='Email'
-                                required={true}
-                            />
-                        </div>
-                        <div className="cadastro-form">
-                            <Input
-                                name='password'
-                                id='password'
-                                className='form-control'
-                                type='password'
-                                autoComplete='off'
-                                placeholder='Senha'
+                                placeholder='DD/MM/AAAA'
                                 required={true}
                             />
                         </div>

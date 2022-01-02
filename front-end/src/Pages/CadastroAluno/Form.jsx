@@ -1,29 +1,51 @@
-import React, { useRef} from 'react'
+import React, { useRef, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 
-import './Form.css' 
+import './Form.css'
 
 import { Form } from '@unform/web'
 import Input from '../../Components/Form/Input'
 import { NavLink } from 'react-router-dom';
 import { BiArrowBack } from "react-icons/bi";
 import UIContainer from '../../Components/Container/container'
+import { fetchTurmas, selectAllTurmas } from '../../shared/TurmasSlice'
+import connect from '../../shared/connectClass';
 
 export default function FormularioAluno() {
 
     const refForm = useRef(null); //Referencia do formulario no HTML
 
+    const turmas = useSelector(selectAllTurmas)
+    const status = useSelector(state => state.turmas.status);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (status === 'not_loaded') {
+            dispatch(fetchTurmas())
+        } else if (status === 'failed') {
+            setTimeout(() => dispatch(fetchTurmas()), 5000);
+        }
+    }, [status, dispatch])
+
     function onSubmit(data) {
-        console.log(data)
+        var select = document.getElementById('turma');
+        var value = select.options[select.selectedIndex].value;
+        data.turma = value;
         /* if (value == "Aluno") {
             console.log("INSERIU COMO ALUNO");
             //insertAluno(data);
         } else if (value == "Professor") {
-            console.log("INSERIU COMO PROFESSOR");
+            console.log("INSERIU COMO PROFESSOR");  
             //insertProfessor(data);
         } */
+        console.log("passou")
+        connect(data, "aluno", turmas)
 
         refForm.current.reset();
     }
+
+    console.log(turmas)
 
     return (
         <UIContainer>
@@ -59,15 +81,12 @@ export default function FormularioAluno() {
                             />
                         </div>
                         <div className="cadastro-form">
-                            <Input
-                                name='idTurma'
-                                id='idTurma'
-                                type='text'
-                                className='form-control'
-                                autoComplete='off'
-                                placeholder='Turma'
-                                required={true}
-                            />
+                            <select name="turma" id="turma">
+                                <option value="Select" selected disabled>Selecione</option>
+                                {turmas.map((turma) => (
+                                    <option>{turma.nome}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="cadastro-form">
                             <Input

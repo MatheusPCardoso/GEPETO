@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { fetchProfessores, selectAllProfessores, deleteProfessorServer, updateProfessorServer } from '../../shared/ProfessoresSlice'
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router';
+import _Table from '../../Components/Table/Table';
 
 
 function ListaProfessores(props) {
@@ -29,6 +30,8 @@ function ListaProfessores(props) {
   function updateProfessor(professor, id){
     const arrayLinhas = Array.from(document.querySelectorAll('.professor')).map(el => Array.from(el.children).slice(0, 3));
     const professorEditado = arrayLinhas[id];
+
+    console.log(arrayLinhas)
     
     const professorObj = {  
       turma: professorEditado[0].innerHTML,
@@ -45,110 +48,18 @@ function ListaProfessores(props) {
     dispatch(deleteProfessorServer(id))
   }
 
-  if (status == 'loading') {
-    return (
-      <>
-        <UIContainer>
-          <TableContainer component={Paper} >
-            <Table className="table-hover" >
-              <TableHead >
-                <TableRow>
-                  <TableCell align="right"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableCell align="center"><h1>Carregando Professores...</h1></TableCell>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Button href="/cadastro" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
-        </UIContainer>
-      </>
-    ) 
-  }
-  else if (professores.length != 0) {
-    return (
-      <>
-        <UIContainer>
-          <TableContainer component={Paper}>
-            <Table className="table-hover">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center">Turma</TableCell>
-                  <TableCell align="center">Username</TableCell>
-                  <TableCell align="center">Nome</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {professores.map((row, index) => (
-                  <TableRow key={row.id} className="professor">
-                    <TableCell id="turma" align="center" contentEditable="true">
-                      {row.turma}
-                    </TableCell>
-                    <TableCell id="username" align="center" contentEditable="true" >
-                      {row.username} 
-                    </TableCell>
-                    <TableCell id="nome" align="center" contentEditable="true" >
-                      {row.nome}
-                    </TableCell>
-                    <TableCell align="center">
-                      {row.tipoconta}
-                    </TableCell>
-                    <TableCell align="right"><Button variant="outline-danger" type="submit" onClick={() => deletaProfessor(row.id)}>Apagar</Button></TableCell>
-                    <TableCell><Button variant="outline-primary" type="submit" onClick={() => updateProfessor(row, index) }>Enviar</Button></TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Button href="/dashboard" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
-        </UIContainer>
-      </>
-    )
-  }
-  else if(professores.length == 0) {
-    return (
-      <>
-        <UIContainer>
-          <TableContainer component={Paper}>
-            <Table className="table-hover">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right"></TableCell>
-                </TableRow>
-              </TableHead>
-                <TableCell align="center"><h1>Lista Vazia!</h1></TableCell>
-            </Table>
-          </TableContainer>
-          <Button href="/cadastro" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
-        </UIContainer>
-      </>
-    )
-  }
-  else{
-    return (
-      <>
-        <UIContainer>
-          <TableContainer component={Paper}>
-            <Table className="table-hover">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableCell align="center"><h1>Error: {error};</h1></TableCell>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Button href="/cadastro" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
-        </UIContainer>
-      </>
-    )
-  }
+  console.log(professores)
+
+  return (
+    <_Table 
+        title={['Turma', 'Username', 'Nome']} 
+        row={['turma', 'username','nome']} 
+        person={professores} 
+        status={status} 
+        func1={deletaProfessor} 
+        func2={updateProfessor}
+      />
+  )
 }
 
 export default ListaProfessores;

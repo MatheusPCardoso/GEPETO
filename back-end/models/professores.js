@@ -15,10 +15,6 @@ const professoresSchema = new Schema({
         type: String,
         required: true,
     },
-    tipoconta: {
-        type: String,
-        required: true,
-    },
     username: {
         type: String,
         required: true,

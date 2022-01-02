@@ -11,7 +11,6 @@ const initialState = professoresAdapter.getInitialState({
 });
 
 export const fetchProfessores = createAsyncThunk('professores/fetchProfessores', async (_, {getState}) => {
-    console.log(getState());
     return await httpGet(`${baseUrl}/professores`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}` }});
 });
 

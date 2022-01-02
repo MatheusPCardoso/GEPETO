@@ -5,3 +5,7 @@ html,body {
 #tab {
     background-color: rgb(235, 227, 227);
 }
+
+#spin {
+    text-align: center;
+}

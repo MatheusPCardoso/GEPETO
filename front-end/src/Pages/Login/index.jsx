@@ -34,7 +34,7 @@ export const Login = (props) => {
                 redirectUrl = '/prova/criar';
             }
             else if (type == "escola") {
-                redirectUrl = '/cadastro';
+                redirectUrl = '/dashboard';
             }
             else if  (type == "turmas"){
                 redirectUrl = '/cadastro/turmas'
