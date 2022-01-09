@@ -5,7 +5,6 @@ const router = express.Router();
 router.post('/', (req, res, next) => {
   Alunos.create(req.body)
     .then((aluno) => {
-      console.log('Aluno criado ', aluno);
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json(aluno);

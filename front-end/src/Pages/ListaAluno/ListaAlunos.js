@@ -14,13 +14,14 @@ function ListaAluno(props) {
   const status = useSelector(state => state.alunos.status);
   const error = useSelector(state => state.alunos.error);
 
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (status === 'not_loaded') {
       dispatch(fetchAlunos())
     } else if (status === 'failed') {
-      setTimeout(() => dispatch(fetchAlunos()), 2000);
+      //setTimeout(() => dispatch(fetchAlunos()), 2000);
     }
   }, [status, dispatch])
 

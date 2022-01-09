@@ -7,7 +7,6 @@ import { login } from './login.service';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchExames, selectExamesIds } from '../ExamesSlice';
 
-
 export const Login = (props) => {
     const history = useHistory();
     const [user, setUser] = useState({
@@ -45,14 +44,10 @@ export const Login = (props) => {
             }
     
             if(loggedIn) {
-                // cookies.set('token', loggedIn);
                 localStorage.setItem('token', loggedIn);
                 localStorage.setItem('usuario', user.username);
                 localStorage.setItem('tipo', user.username.split('@')[1].split('.com')[0]);
-                // localStorage.setItem('userId', loggedIn.id);
                 history.push(redirectUrl);
-                props.changeUserState(user.username);
-                // location.reload();
                 alert('Você foi logado com sucesso!');
             }
         })

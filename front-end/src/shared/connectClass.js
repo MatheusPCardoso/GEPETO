@@ -1,9 +1,10 @@
+import React from "react"
 import { useDispatch } from "react-redux"
 import { updateTurmaServer } from "./TurmasSlice"
 
 export default function connect(obj, who, turma){
 
-    async function UpTurma(turma){
+    function UpTurma(turma){
         useDispatch(updateTurmaServer(turma)).then((res) => console.log(res))
     }
 
@@ -22,7 +23,6 @@ export default function connect(obj, who, turma){
         let temp = {professor: ''}
         temp.professor = obj.id
         temp = Object.assign({},turma,temp)
-        //UpTurma(temp)
-        console.log(temp.id)
+            UpTurma(temp)
     }
 }

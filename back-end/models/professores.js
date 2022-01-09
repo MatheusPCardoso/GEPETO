@@ -11,7 +11,7 @@ const professoresSchema = new Schema({
         type: String,
         required: true,
     },
-    turma: {
+    codTurma: {
         type: String,
         required: true,
     },

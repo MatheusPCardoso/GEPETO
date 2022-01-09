@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+
 import { selectAllProfessores, fetchProfessores } from '../../shared/ProfessoresSlice'
 import { addTurmaServer } from '../../shared/TurmasSlice'
 
@@ -11,10 +12,10 @@ import Input from '../../Components/Form/Input'
 import { NavLink } from 'react-router-dom';
 import { BiArrowBack } from "react-icons/bi";
 import UIContainer from '../../Components/Container/container'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function FormularioTurma() {
-
-    //const [isClass, setClass] = useState(false);
 
     const professores = useSelector(selectAllProfessores)
     const status = useSelector(state => state.professores.status);
@@ -29,20 +30,26 @@ export default function FormularioTurma() {
         }
     }, [status, dispatch])
 
-    const refForm = useRef(null); //Referencia do formulario no HTML
+    const refForm = useRef(null);
 
     function onSubmit(data) {
         var value = document.getElementById('professor')
             .options[document
                 .getElementById('professor')
                 .selectedIndex].value;
-        
+
         value == 'Select' ? value = '' : null
 
         data.professor = value;
         
-        async function insertTurma(turma){
-            dispatch(addTurmaServer(turma)).then((res) => console.log('turma criado!'))
+        function insertTurma(turma){
+            dispatch(addTurmaServer(turma)).then((res) => {
+                if(res.error){
+                    toast.error('Algo deu errado!')
+                }else{
+                    toast.success('Turma criada com sucesso!')
+                }
+            })
         }
 
         insertTurma(data)
@@ -74,12 +81,12 @@ export default function FormularioTurma() {
                         </div>
                         <div className="cadastro-form">
                             <Input
-                                name='turma'
-                                id='turma'
+                                name='codTurma'
+                                id='codTurma'
                                 type='text'
                                 autoComplete='off'
                                 className='form-control'
-                                placeholder='IDTurma'
+                                placeholder='Código da turma'
                                 required={true}
                             />
                         </div>

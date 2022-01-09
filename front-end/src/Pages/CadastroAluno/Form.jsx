@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
 import './Form.css'
@@ -8,8 +8,11 @@ import Input from '../../Components/Form/Input'
 import { NavLink } from 'react-router-dom';
 import { BiArrowBack } from "react-icons/bi";
 import UIContainer from '../../Components/Container/container'
-import { fetchTurmas, selectAllTurmas } from '../../shared/TurmasSlice'
-import connect from '../../shared/connectClass';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import { addAlunoServer } from '../../shared/AlunosSlice'
+import { fetchTurmas, selectAllTurmas, AddTurmaAlunoServer } from '../../shared/TurmasSlice'
 
 export default function FormularioAluno() {
 
@@ -17,6 +20,7 @@ export default function FormularioAluno() {
 
     const turmas = useSelector(selectAllTurmas)
     const status = useSelector(state => state.turmas.status);
+    const validado = useState(false)
 
     const dispatch = useDispatch();
 
@@ -28,24 +32,47 @@ export default function FormularioAluno() {
         }
     }, [status, dispatch])
 
+
+    function sendStudentNClass(aluno, turma) {
+        console.log('entrou aqui')
+        try {
+        dispatch(addAlunoServer(aluno))
+            .then((res) => {
+                
+                    let temp = { alunos: {}, who: 'aluno' }
+                    temp.alunos = res.payload.nome
+                    temp = Object.assign({}, turma, temp)
+                    dispatch(AddTurmaAlunoServer(temp))
+                        .then((res) => {
+                            if(res.error){
+                                toast.error('Algo deu errado!')
+                            }else{
+                                toast.success('Aluno inserido com sucesso!')
+                            }
+                        })
+            })
+        }
+        catch{
+            toast.error("Algo deu errado!")
+        }
+    }
+
     function onSubmit(data) {
         var select = document.getElementById('turma');
         var value = select.options[select.selectedIndex].value;
         data.turma = value;
-        /* if (value == "Aluno") {
-            console.log("INSERIU COMO ALUNO");
-            //insertAluno(data);
-        } else if (value == "Professor") {
-            console.log("INSERIU COMO PROFESSOR");  
-            //insertProfessor(data);
-        } */
-        console.log("passou")
-        connect(data, "aluno", turmas)
 
-        refForm.current.reset();
+
+        for (var i = 0; i < turmas.length; i++) {
+            if (turmas[i].nome == data.turma) {
+                sendStudentNClass(data, turmas[i])
+                refForm.current.reset();
+            }
+        }
+
+
+
     }
-
-    console.log(turmas)
 
     return (
         <UIContainer>

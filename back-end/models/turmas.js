@@ -2,25 +2,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const normalize = require('normalize-mongoose');
 
+const reqString = {
+    type: String,
+    require: true
+}
 
 const turmaSchema = new Schema({
-    nome: {
-        type: String,
-        required: false,
-    },
-    turma: {
-        type: String,
-        required: false,
-    },
-    professor: {
-        type: String,
-    },
-    dataInicio:{
-        type: String,
-    },
-    dataFim:{
-        type: String,
-    }
+    id: reqString,
+    nome: reqString,
+    codTurma: reqString,
+    professor: reqString,
+    dataInicio:reqString,
+    dataFim: reqString,
+    alunos: [String]
 })
 
 turmaSchema.plugin(normalize);

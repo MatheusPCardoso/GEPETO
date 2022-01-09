@@ -1,18 +1,21 @@
 import React from 'react';
 
 import UIContainer from '../Container/container';
+import ValidaPro from './ValidaPro';
 
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Button from 'react-bootstrap/Button';
 import { Paper, TableBody, TableCell, TableContainer } from '@material-ui/core';
 import { Table } from 'react-bootstrap';
+import Mode from '../Modal/Modal';
+import Button from '@mui/material/Button';
+
 
 export default function _Table(props) {
 
-    console.log(props.status)
 
-    if (props.status != 'loaded') {
+
+    if (props.status == 'loading') {
         return (
             <UIContainer>
                 <TableContainer component={Paper} id='tab'>
@@ -22,9 +25,10 @@ export default function _Table(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody id='spin'>
-                            <div class="spinner-border" role="status">
+                            <div class="spinner-border" role="status" style={{ marginTop: '2%' }}>
                                 <span class="sr-only"></span>
                             </div>
+                            <span>  {props.status}...</span>
                         </TableBody>
 
                     </Table>
@@ -33,7 +37,7 @@ export default function _Table(props) {
 
                 <Button
                     href="/dashboard"
-                    variant="outline-primary"
+                    variant="outlined"
                     style={{ marginTop: "2%" }}
                 >
                     Voltar
@@ -70,41 +74,66 @@ export default function _Table(props) {
                                             </TableCell>
 
                                     ))}
+
+                                    <ValidaPro turma={row.nome} />
+
                                     <TableCell
                                         className="turma"
                                         align="center"
                                         contentEditable="false"
 
                                     >
-                                        {row.alunos ? row.alunos + " " : " "}
+                                        {row.alunos ?
+                                            <div>
+                                                <Mode turma={row.nome} />
+                                            </div>
+                                            :
+                                            " "}
 
                                     </TableCell>
 
-                                    <TableCell
-                                        align="right">
+                                    <TableCell align="right">
                                         <Button
-                                            variant="danger"
+                                            variant="contained"
+                                            color='error'
                                             type="submit"
                                             onClick={() => props.func1(row.id)}
                                         >
                                             Apagar
                                         </Button>
                                     </TableCell>
-                                    <TableCell>
-                                        <Button
-                                            variant="primary"
-                                            type="submit"
-                                            onClick={() => props.func2(row)}
-                                        >
-                                            Alterar
-                                        </Button>
-                                    </TableCell>
+                                    {props.person[0].alunos ? '' :
+                                        <TableCell>
+                                            <Button
+                                                variant="contained"
+                                                type="submit"
+                                                onClick={() => props.func2(row)}
+                                            >
+                                                Alterar
+                                            </Button>
+                                        </TableCell>}
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Button href="/dashboard" variant="outline-primary" style={{ marginTop: "2%" }}>Voltar</Button>
+                <Button href="/dashboard" variant="outlined" style={{ marginTop: "2%" }}>Voltar</Button>
+            </UIContainer>
+
+        )
+    } else {
+        return (
+            <UIContainer>
+                <TableContainer component={Paper} id='tab'>
+                    <Table className="table-hover" >
+                        <TableHead>
+                        </TableHead>
+                        <TableBody style={{ textAlign: 'center' }}>
+                            <h1 style={{ marginTop: '2%' }}>Lista Vazia!</h1>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <Button href="/dashboard" variant="outlined" style={{ marginTop: "2%" }}>Voltar</Button>
             </UIContainer>
 
         )

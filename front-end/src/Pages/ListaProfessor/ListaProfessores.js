@@ -15,7 +15,6 @@ function ListaProfessores(props) {
   
   const professores = useSelector(selectAllProfessores)
   const status = useSelector(state => state.professores.status);
-  const error = useSelector(state => state.professores.error);
 
   const dispatch = useDispatch();
 

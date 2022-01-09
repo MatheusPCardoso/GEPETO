@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { NavLink } from "react-router-dom";
 
-import { BsFillPeopleFill, BsDoorOpenFill, BsFillKanbanFill } from "react-icons/bs";
+import { BsFillPeopleFill, BsDoorOpenFill, BsFillKanbanFill, BsFillArrowLeftSquareFill } from "react-icons/bs";
 
 
 import './sidebar.css';
 
 const Sidebar = () => {
+    const [user, setUser] = useState();
 
     return (
         <>
@@ -78,11 +80,29 @@ const Sidebar = () => {
                         </a>
                         <span class="tooltip">Cadastro Turmas</span>
                     </li>
+                    <li>
+                        <span className="imagem">
+                            <NavLink exact to="/" onClick={() => {
+                                localStorage.removeItem('token');
+                                localStorage.removeItem('usuario');
+                                localStorage.removeItem('tipo');
+                                alert('Você foi deslogado com sucesso!')
+                                setUser('');
+                            }}>
+                                <BsFillArrowLeftSquareFill className="imagem" />
+                            </NavLink>
+                        </span>
+
+                            <span class="tooltip-out">Sair</span>
+                    </li>
                 </ul>
+
+
             </div>
             <section class="home-section">
                 <div class="text">Dashboard</div>
             </section>
+
         </>
     )
 };

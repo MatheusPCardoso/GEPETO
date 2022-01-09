@@ -11,7 +11,6 @@ const initialState = alunosAdapter.getInitialState({
 });
 
 export const fetchAlunos = createAsyncThunk('alunos/fetchAlunos', async (_, {getState}) => {
-    console.log(getState());
     return await httpGet(`${baseUrl}/alunos`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}` }});
 });
 
