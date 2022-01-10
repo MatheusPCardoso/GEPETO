@@ -30,6 +30,7 @@ function ListaTurma(props) {
       status={status} 
       func1={deletaTurma} 
       func2={turmas}
+      turma={true}
     />
   )
 

@@ -52,7 +52,7 @@ function ListaProfessores(props) {
   return (
     <_Table 
         title={['Turma', 'Username', 'Nome']} 
-        row={['turma', 'username','nome']} 
+        row={['codTurma', 'username','nome']} 
         person={professores} 
         status={status} 
         func1={deletaProfessor} 

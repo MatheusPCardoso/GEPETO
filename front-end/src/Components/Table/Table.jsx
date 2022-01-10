@@ -75,7 +75,13 @@ export default function _Table(props) {
 
                                     ))}
 
-                                    <ValidaPro turma={row.nome} />
+                                    {
+                                        props.turma == true ?
+                                        <ValidaPro turma={row.nome} />
+                                        :
+                                        ''
+                                    }
+                                    
 
                                     <TableCell
                                         className="turma"
