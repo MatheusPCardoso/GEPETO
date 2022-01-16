@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavLink } from "react-router-dom";
 
 import { BsFillPeopleFill, BsDoorOpenFill, BsFillKanbanFill, BsFillArrowLeftSquareFill } from "react-icons/bs";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 
 import './sidebar.css';
@@ -12,13 +14,6 @@ const Sidebar = () => {
     return (
         <>
             <div class="sidebar">
-                {/* <div class="logo-details">
-                    <div class="logo_name"></div>
-                    <div className="imagem">
-                        <AiOutlineMenu id='btn'/>
-                    </div>
-                    
-                </div> */}
                 <ul class="nav-list">
                     <li>
                         <a href="/lista/alunos">
@@ -86,8 +81,7 @@ const Sidebar = () => {
                                 localStorage.removeItem('token');
                                 localStorage.removeItem('usuario');
                                 localStorage.removeItem('tipo');
-                                alert('Você foi deslogado com sucesso!')
-                                setUser('');
+                                toast.info('Deslogado com sucesso!')
                             }}>
                                 <BsFillArrowLeftSquareFill className="imagem" />
                             </NavLink>

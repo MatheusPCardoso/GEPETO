@@ -6,6 +6,8 @@ import { Edit } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addExameServer } from '../ExamesSlice';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const CreateExam = (props) => {
     const history = useHistory();
@@ -26,7 +28,9 @@ export const CreateExam = (props) => {
 
     async function salvarProva() {
         dispatch(addExameServer({questoes, nome: nomeProva})).then((res) => {
-            alert("Prova criada com sucesso!");
+            toast.warning('Usuário ou senha incorreto!', {
+                position: toast.POSITION.TOP_CENTER
+            });
             history.push(`/provas`);
         });
     }

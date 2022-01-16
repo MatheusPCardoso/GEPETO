@@ -1,9 +1,5 @@
-html,body {
-    background-color: rgb(228,233,247);
-}
-
-#tab {
-    background-color: rgb(235, 227, 227);
+html,body, #root {
+    background-color: rgb(234, 239, 255);
 }
 
 #spin {

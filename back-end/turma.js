@@ -19,7 +19,6 @@ router.route('/').get(async (req, res, next) => {
 router.post('/', (req, res, next) => {
   Turmas.create(req.body)
     .then((turma) => {
-      console.log('Turma criada ', turma);
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json(turma);
@@ -32,13 +31,9 @@ router.delete('/:id', async (req, res, next) => {
     .then((resp) => {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
-      res.json(resp.id);
+      res.json(resp);
     }, (err) => next(err))
     .catch((err) => next(err));
-})
-
-router.put('/:id', (req, res) => {
-
 })
 
 router.put('/addAluno/:id', (req, res) => {
@@ -52,16 +47,16 @@ router.put('/addAluno/:id', (req, res) => {
       professor: req.body.professor
     }
   }
-  console.log(req.body)
+  console.log('entrou no put')
   if (req.body.who == 'aluno') {
-
+    console.log('entrou no aluno')
     Turmas.findByIdAndUpdate(req.body.id, updateAluno).then(response => {
       res.status(200).json({ msg: `${req.body.who} inserido com sucesso`, response });
     })
       .catch(err => res.status(400).json({ msg: 'Id não encontrado', erro: err }))
   }
   else if (req.body.who == 'professor') {
-
+    console.log('entrou no professor')
     Turmas.findByIdAndUpdate(req.body.id, setProfessor).then(response => {
       res.status(200).json({ msg: `${req.body.who} inserido com sucesso`, response });
     })

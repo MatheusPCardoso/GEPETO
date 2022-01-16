@@ -1,14 +1,12 @@
 import React, { useState } from "react"
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { Navbar, Nav, Container, Toast } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import '../../assets/images/logo.png'
-
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export function NavBar(props) {
     const [user, setUser] = useState();
@@ -23,7 +21,7 @@ export function NavBar(props) {
     const isAluno = () => type == 'alunos';
     const isProf = () => type == 'professores';
     const isEscola = () => type == 'escola';
-    const loggedIn = () => !!user;
+    const loggedIn = () => user;
 
     return (
         <div>
@@ -33,7 +31,7 @@ export function NavBar(props) {
                     <NavLink to="/" className="gepeto"><img className="img-fluid"
                         src="../../../assets/images/logo.png" style={{ width: "100px" }} /></NavLink>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav" className="justify-space-between">
+                    <Navbar.Collapse id="basic-navbar-nav" className="d-flex justify-content-between">
                         <Nav className="navbar">
                             <Nav.Link hidden={!loggedIn() || isAluno() || isEscola()}>
                                 <NavLink to="/prova/criar" style={{ textDecoration: 'none' }}>Criar Prova</NavLink>
@@ -47,20 +45,19 @@ export function NavBar(props) {
                             <Nav.Link hidden={!loggedIn() || isEscola()}>
                                 <NavLink to="/resultado" style={{ textDecoration: 'none' }}>Resultado</NavLink>
                             </Nav.Link>
-                            <Nav.Link hidden={!loggedIn() || isAluno() || isProf() || isEscola()}>
-                                <NavLink to="/turma" style={{ textDecoration: 'none' }}>Turma</NavLink>
-                            </Nav.Link>
                         </Nav>
                         <Navbar.Text className="navLogin-pai">
                             {
                                 user
-                                    ? <span className="navLogin">Logado como: {user} <NavLink exact to="/" onClick={() => {
+                                    ? <NavLink exact to="/" onClick={() => {
                                         localStorage.removeItem('token');
                                         localStorage.removeItem('usuario');
                                         localStorage.removeItem('tipo');
-                                        alert('Você foi deslogado com sucesso!')
+                                        toast.success('Deslogado com sucesso!', {
+                                            position: toast.POSITION.TOP_CENTER
+                                        })
                                         setUser('');
-                                    }}>Sair</NavLink></span>
+                                    }}>Sair</NavLink>
                                     : <NavLink to="/" className="navLogin">Fazer Login</NavLink>
                             }
                         </Navbar.Text>

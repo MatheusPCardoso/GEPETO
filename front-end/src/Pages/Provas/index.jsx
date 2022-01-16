@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExames, selectAllExames } from '../ExamesSlice';
-import { NavLink } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { NavBar } from '../../Components/NavBar/navBar';
+
 
 export const Provas = () => {
 
@@ -13,8 +17,50 @@ export const Provas = () => {
         dispatch(fetchExames());
     }, [])
 
+    console.log(provas)
     return (
-        <div className="container provas">
+        <>
+        <NavBar />
+        <div className='row' style={{ maxWidth: '960px', height: '88.8vh' , margin: 'auto'}}>
+            {
+                provas.map(prova => {
+                    return (
+                        <div className='col-4 mt-5'>
+                            <Paper sx={{ 
+                                p: 2, 
+                                margin: 'auto', 
+                                maxWidth: 200, 
+                                height: 150, 
+                                flexGrow: 1,
+                                cursor: 'pointer'
+
+                            }} key={prova.id} onClick={()=> window.location = `/prova/${prova._id}`}>
+                                
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} sm container>
+                                        <Grid item xs container direction="column" spacing={2}>
+                                            <Grid item xs>
+                                                <Typography variant= 'button' color="text.primary">
+                                                    {prova.nome}
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </div>
+                    )
+                })
+            }
+
+        </div>
+        </>
+
+    )
+}
+
+export default Provas;
+/* <div className="container provas">
             <table className="table table-bordered">
                 <thead className="thead-dark">
                     <th scope="col">Id</th>
@@ -35,8 +81,4 @@ export const Provas = () => {
                     }
                 </tbody>
             </table>
-        </div>
-    )
-}
-
-export default Provas;
+        </div> */

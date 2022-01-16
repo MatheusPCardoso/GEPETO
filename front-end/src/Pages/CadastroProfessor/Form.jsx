@@ -11,8 +11,8 @@ import UIContainer from '../../Components/Container/container'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { fetchTurmas, selectAllTurmas, updateTurmaServer } from '../../shared/TurmasSlice'
-import { addProfessorServer } from '../../shared/ProfessoresSlice'
+import { fetchTurmas, selectAllTurmas } from '../../shared/TurmasSlice'
+import { addProfessorServer, fetchProfessores, selectAllProfessores } from '../../shared/ProfessoresSlice'
 import { useState } from 'react';
 
 toast.configure()
@@ -20,38 +20,40 @@ toast.configure()
 export default function FormularioProfessor() {
     const refForm = useRef(null)
     const turmas = useSelector(selectAllTurmas)
+    const professores = useSelector(selectAllProfessores)
+    const statusP = useSelector(state => state.professores.status);
     const status = useSelector(state => state.turmas.status);
-    const [open, setOpen] = useState(false)
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (status === 'not_loaded') {
             dispatch(fetchTurmas())
         } else if (status === 'failed') {
-            setTimeout(() => { dispatch(fetchTurmas()) }, 5000);
+            toast.error('Erro ao dar get na turma')
         }
     }, [status, dispatch])
+    
+    useEffect(() => {
+        if (statusP === 'not_loaded') {
+            dispatch(fetchProfessores())
+        } else if (statusP === 'failed') {
+            toast.error('Erro ao dar get no professor')
+        }
+    }, [statusP, dispatch])
 
-    function sendProNClass(professor, turma) {
+    function sendProNClass(professor) {
 
         dispatch(addProfessorServer(professor))
             .then((res) => {
                 if (res.error) {
-                    toast.error('Algo deu errado!')
+                    toast.error('Algo deu errado!', {
+                        position: toast.POSITION.TOP_CENTER
+                    })
                 }
                 else {
-                    let temp = { professor: '', who: 'professor' }
-                    temp.professor = res.payload.nome
-                    temp = Object.assign({}, turma, temp)
-                    dispatch(updateTurmaServer(temp))
-                        .then((res) => {
-                            if (res.error) {
-                                toast.error('Algo deu errado!')
-                            }
-                            else{
-                                toast.success("Professor inserido com sucesso!")
-                            }
-                        })
+                    toast.success('Professor criado com sucesso!', {
+                        position: toast.POSITION.TOP_CENTER
+                    })
                 }
             })
     }
@@ -63,21 +65,25 @@ export default function FormularioProfessor() {
         data.who = 'professor'
 
         var validado = false;
+        var livre = true;
 
-        for (var i = 0; i < turmas.length; i++) {
-            if (turmas[i].professor == '' && turmas[i].nome == data.codTurma) {
-                sendProNClass(data, turmas[i])
-                validado = true;
-                refForm.current.reset();
+        for(let j = 0; j < professores.length; j++){
+            if(professores[j].codTurma == data.codTurma){
+                livre = false
+            }else {
+                livre = true
             }
         }
 
-        if (validado) {
-            toast.success('Professor criado com sucesso!', {
-                position: toast.POSITION.TOP_CENTER
-            })
+        for (let i = 0; i < turmas.length; i++) {
+            if (livre && turmas[i].nome == data.codTurma) {
+                sendProNClass(data)
+                refForm.current.reset();
+                validado = true
+            }
         }
-        else {
+
+        if (!validado) {
             toast.error('Turmas já tem professor alocado!', {
                 position: toast.POSITION.TOP_CENTER
             })
@@ -90,7 +96,6 @@ export default function FormularioProfessor() {
             <Form className='Form' ref={refForm} onSubmit={onSubmit}>
 
                 <div className="div-card">
-                    <NavLink to="/dashboard" className="voltar"><BiArrowBack /> Voltar</NavLink>
                     <div className='container-card'>
                         <div>
                             <h1 className="title">Cadastro de professor</h1>
@@ -153,11 +158,11 @@ export default function FormularioProfessor() {
                             />
                         </div>
 
-                        <div className="d-flex">
-                            <button type="submit" className="btn btn-primary me-md-2">Salvar</button>
+                        <div style={{display: 'inline-block'}}>
+                            <NavLink to="/dashboard" className="btn btn-outline-primary me-md-2"><BiArrowBack /> Voltar</NavLink>
                         </div>
-                        <div class="" role="alert" id='alert' style={{ marginTop: '2%' }}>
-
+                        <div style={{float:'right'}}>
+                            <button type="submit"  className="btn btn-primary me-md-2">Salvar</button>
                         </div>
                     </div>
                 </div>

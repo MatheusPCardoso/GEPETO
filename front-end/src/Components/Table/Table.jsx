@@ -9,15 +9,15 @@ import { Paper, TableBody, TableCell, TableContainer } from '@material-ui/core';
 import { Table } from 'react-bootstrap';
 import Mode from '../Modal/Modal';
 import Button from '@mui/material/Button';
+import Mode2 from '../Modal/modal2';
 
 
 export default function _Table(props) {
 
-
-
     if (props.status == 'loading') {
         return (
-            <UIContainer>
+            
+            <UIContainer className='container'>
                 <TableContainer component={Paper} id='tab'>
                     <Table className="table-hover" >
                         <TableHead>
@@ -45,10 +45,9 @@ export default function _Table(props) {
 
             </UIContainer>
 
-
         )
     }
-    else if (props.person.length != 0) {
+    else if(props.person.length != 0) {
         return (
             <UIContainer>
                 <TableContainer component={Paper} id='tab'>
@@ -74,8 +73,13 @@ export default function _Table(props) {
                                             </TableCell>
 
                                     ))}
-
-                                    <ValidaPro turma={row.nome} />
+                                    
+                                    {
+                                        props.turma ?
+                                            <ValidaPro turma={row.nome} />
+                                            :
+                                            ''
+                                    }
 
                                     <TableCell
                                         className="turma"
@@ -104,13 +108,7 @@ export default function _Table(props) {
                                     </TableCell>
                                     {props.person[0].alunos ? '' :
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                type="submit"
-                                                onClick={() => props.func2(row)}
-                                            >
-                                                Alterar
-                                            </Button>
+                                            <Mode2 row={row} whoEdit={props.whoEdit}/>
                                         </TableCell>}
                                 </TableRow>
                             ))}
@@ -119,7 +117,6 @@ export default function _Table(props) {
                 </TableContainer>
                 <Button href="/dashboard" variant="outlined" style={{ marginTop: "2%" }}>Voltar</Button>
             </UIContainer>
-
         )
     } else {
         return (

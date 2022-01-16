@@ -47,7 +47,9 @@ export default function FormularioAluno() {
                             if(res.error){
                                 toast.error('Algo deu errado!')
                             }else{
-                                toast.success('Aluno inserido com sucesso!')
+                                toast.success('Aluno inserido com sucesso!', {
+                                    position: toast.POSITION.TOP_CENTER
+                                })
                             }
                         })
             })
@@ -79,10 +81,9 @@ export default function FormularioAluno() {
             <Form className='Form' ref={refForm} onSubmit={onSubmit}>
 
                 <div className="div-card">
-                    <NavLink to="/dashboard" className="voltar"><BiArrowBack /> Voltar</NavLink>
                     <div className='container-card'>
                         <div>
-                            <h1 className="title">Cadastro do aluno</h1>
+                            <h1 className="title" style={{marginBottom: '2%'}}>Cadastro do aluno</h1>
                         </div>
 
                         <div className="cadastro-form">
@@ -138,10 +139,11 @@ export default function FormularioAluno() {
                             />
                         </div>
 
-                        <div className="d-flex">
-
-
-                            <button type="submit" className="btn btn-primary me-md-2">Salvar</button>
+                        <div style={{display: 'inline-block', marginTop: '2%'}}>
+                            <NavLink to="/dashboard" className="btn btn-outline-primary me-md-2"><BiArrowBack /> Voltar</NavLink>
+                        </div>
+                        <div style={{float:'right', marginTop: '2%'}}>
+                            <button type="submit"  className="btn btn-primary me-md-2">Salvar</button>
                         </div>
                     </div>
                 </div>

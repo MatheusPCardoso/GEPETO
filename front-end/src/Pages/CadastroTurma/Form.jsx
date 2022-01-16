@@ -41,13 +41,15 @@ export default function FormularioTurma() {
         value == 'Select' ? value = '' : null
 
         data.professor = value;
-        
-        function insertTurma(turma){
+
+        function insertTurma(turma) {
             dispatch(addTurmaServer(turma)).then((res) => {
-                if(res.error){
+                if (res.error) {
                     toast.error('Algo deu errado!')
-                }else{
-                    toast.success('Turma criada com sucesso!')
+                } else {
+                    toast.success('Turma criada com sucesso!', {
+                        position: toast.POSITION.TOP_CENTER
+                    })
                 }
             })
         }
@@ -62,7 +64,7 @@ export default function FormularioTurma() {
             <Form className='Form' ref={refForm} onSubmit={onSubmit}>
 
                 <div className="div-card">
-                    <NavLink to="/dashboard" className="voltar"><BiArrowBack /> Voltar</NavLink>
+
                     <div className='container-card'>
                         <div>
                             <h1 className="title">Cadastro de turma</h1>
@@ -118,14 +120,17 @@ export default function FormularioTurma() {
                                 autoComplete='off'
                                 placeholder='DD/MM/AAAA'
                                 required={true}
+                                
                             />
                         </div>
 
-                        <div className="d-flex">
-
-
-                            <button type="submit" className="btn btn-primary me-md-2">Salvar</button>
+                        <div style={{display: 'inline-block'}}>
+                            <NavLink to="/dashboard" className="btn btn-outline-primary me-md-2"><BiArrowBack /> Voltar</NavLink>
                         </div>
+                        <div style={{float:'right'}}>
+                            <button type="submit"  className="btn btn-primary me-md-2">Salvar</button>
+                        </div>
+                        
                     </div>
                 </div>
             </Form>
