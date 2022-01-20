@@ -21,6 +21,19 @@ router.get('/', async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+router.get('/:username', async (req, res) => {
+    await Professores.find({username: req.params.username}, (err, data) => {
+      if(err){
+        res.status(404).send(err);
+      }
+      else{
+        res.status(200).json(data)
+      }
+    })
+})
+
+
 router.delete('/:id', async (req, res, next) => {
   Professores.findByIdAndRemove(req.params.id)
   .then((resp) => {

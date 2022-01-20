@@ -192,12 +192,15 @@ export default function Mode2(props) {
                             id="user"
                             label="User"
                             defaultValue={temp.username}
+                            fullWidth = {true}
                         />
                         <TextField
                             onChange={(e) => setNome(e.target.value)}
                             id="user"
-                            label="User"
+                            label="Nome"
                             defaultValue={temp.nome}
+                            fullWidth = {true}
+                            style = {{marginTop: '2%'}}
                         />
 
                         <div style={{ marginTop: '2%' }}>

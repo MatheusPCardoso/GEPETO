@@ -13,7 +13,6 @@ const initialState = examesAdapter.getInitialState({
 });
 
 export const fetchExames = createAsyncThunk('exames/fetchExames', async (_, {getState}) => {
-    console.log(getState());
     return await httpGet(`${baseUrl}/exames`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}` }});
 });
 

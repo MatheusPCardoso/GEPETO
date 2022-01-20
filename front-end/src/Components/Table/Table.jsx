@@ -11,7 +11,6 @@ import Mode from '../Modal/Modal';
 import Button from '@mui/material/Button';
 import Mode2 from '../Modal/modal2';
 
-
 export default function _Table(props) {
 
     if (props.status == 'loading') {
@@ -50,7 +49,7 @@ export default function _Table(props) {
     else if(props.person.length != 0) {
         return (
             <UIContainer>
-                <TableContainer component={Paper} id='tab'>
+                <TableContainer component={Paper} >
                     <Table className="table-hover" >
                         <TableHead>
                             <TableRow>
@@ -121,7 +120,7 @@ export default function _Table(props) {
     } else {
         return (
             <UIContainer>
-                <TableContainer component={Paper} id='tab'>
+                <TableContainer component={Paper} id='tab' >
                     <Table className="table-hover" >
                         <TableHead>
                         </TableHead>

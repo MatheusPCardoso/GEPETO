@@ -11,7 +11,15 @@ import { NavBar } from '../../Components/NavBar/navBar';
 export const Provas = () => {
 
     const provas = useSelector((state) => selectAllExames(state));
+    const [type, setType] = useState();    
     const dispatch = useDispatch();
+    
+    useEffect(() => {
+        const usuario = localStorage.getItem('usuario');
+        setType(localStorage.getItem('tipo'));
+    }, []);
+    const isProf = () => type == 'professores';
+    
 
     useEffect(() => {
         dispatch(fetchExames());
@@ -20,7 +28,7 @@ export const Provas = () => {
     console.log(provas)
     return (
         <>
-        <NavBar />
+        <NavBar hidden={ isProf()}/>
         <div className='row' style={{ maxWidth: '960px', height: '88.8vh' , margin: 'auto'}}>
             {
                 provas.map(prova => {

@@ -1,62 +1,72 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { Navigation } from 'react-minimal-side-navigation';
+import { fetchProfessorUser } from "../../shared/ProfessoresSlice";
+import { selectAllAlunos, fetchAlunos } from "../../shared/AlunosSlice";
+
+import { SiGoogleclassroom, SiGitbook } from "react-icons/si";
+import Sidebar from '../../Components/sideBar/SideBar'
+
+import { PieChart } from '../../Components/Chart/PieChart';
+import { useDispatch, useSelector } from "react-redux";
+
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
-import { BsFillHouseDoorFill, BsFillBookFill, BsFillArrowLeftSquareFill} from "react-icons/bs";
-import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const style = {
-    width: '250px',
-    height: '100vh',
-    paddingTop: '5%',
-    backgroundColor: '#949799',
-    color: 'white'
-}
-
-
 export default function DashboardNavbar() {
+    var professor = {}
+    const dispatch = useDispatch();
+    const arrayAlunos = [];
+    const alunos = useSelector(selectAllAlunos)
+    const statusAlunos = useSelector(state => state.alunos.status);
 
-    const history = useHistory();
+    useEffect(() => {
+        if (statusAlunos === 'not_loaded') {
+            dispatch(fetchAlunos())
+        } else if (statusAlunos === 'failed') {
+            console.log('algo deu errado!')
+        }
+    }, [statusAlunos, dispatch])
+
+
+    const optionsExames = {
+        title: 'Provas',
+        is3D: true,
+    };
+
+    const optionsAlunos = {
+        title: 'Alunos',
+        is3D: true,
+    };
+
+    dispatch(fetchProfessorUser(localStorage.getItem('usuario')))
+        .then(res => {
+            professor = res.payload[0]
+        })
+
+
+    alunos.map(aluno => {
+        if(aluno.turma == professor.codTurma){
+            arrayAlunos.push([alunos.nome, 1])
+        }
+    })
+
+
+    console.log(123)
+
+
+    const data = [
+        { href: '/prova/criar', name: 'Criar prova', icon: <SiGitbook /> },
+        { href: '/turma', name: 'Ver turma', icon: <SiGoogleclassroom /> },
+        { href: '/', name: 'Ver turma', icon: <SiGoogleclassroom /> },
+    ]
+
+
+
+
 
     return (
-        <div style={style}>
-            <Navigation
-                activeItemId="/dashboardp"
-                onSelect={({ itemId }) => {
-                    if (itemId === '/') {
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('usuario');
-                        localStorage.removeItem('tipo');
-                        toast.info('Deslogado com sucesso!')
-                        history.push(itemId)
-                    }
-                    else if (itemId == 'turma') {
-
-                    } else {
-                        history.push(itemId)
-                    }
-                }}
-                items={[
-                    {
-                        title: 'Dashboard',
-                        itemId: '/dashboardp',
-                        elemBefore: () => <BsFillHouseDoorFill name="dashboard" />,
-                    },
-                    {
-                        title: 'Criar Prova',
-                        itemId: '/prova/criar',
-                        elemBefore: () => <BsFillBookFill name="prova" />,
-                    },
-                    {
-                        title: 'Sair',
-                        itemId: '/',
-                        elemBefore: () => <BsFillArrowLeftSquareFill name="prova" />,
-                    },
-                ]}
-
-            />
+        <div>
+            <Sidebar data={data} dashboard={<PieChart graficos={{ data: 'dataAlunos', options: 'optionsAlunos' }} />} />
         </div>
     );
 

@@ -14,6 +14,10 @@ export const fetchProfessores = createAsyncThunk('professores/fetchProfessores',
     return await httpGet(`${baseUrl}/professores`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}` }});
 });
 
+export const fetchProfessorUser = createAsyncThunk('professores/fetchProfessores', async (usernameProfessor, {getState}) => {
+    return await httpGet(`${baseUrl}/professores/${usernameProfessor}`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}` }});
+});
+
 export const deleteProfessorServer = createAsyncThunk('professores/deleteProfessorServer', async (idProfessor, {getState}) => {
     await httpDelete(`${baseUrl}/professores/${idProfessor}`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}` }});
     return idProfessor;

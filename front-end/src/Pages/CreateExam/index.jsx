@@ -28,10 +28,10 @@ export const CreateExam = (props) => {
 
     async function salvarProva() {
         dispatch(addExameServer({questoes, nome: nomeProva})).then((res) => {
-            toast.warning('Usuário ou senha incorreto!', {
+            toast.success('Prova criada com sucesso!', {
                 position: toast.POSITION.TOP_CENTER
             });
-            history.push(`/provas`);
+            history.push(`/dashboardp`);
         });
     }
 

@@ -13,7 +13,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { fetchTurmas, selectAllTurmas } from '../../shared/TurmasSlice'
 import { addProfessorServer, fetchProfessores, selectAllProfessores } from '../../shared/ProfessoresSlice'
-import { useState } from 'react';
 
 toast.configure()
 

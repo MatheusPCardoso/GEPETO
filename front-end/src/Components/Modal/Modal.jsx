@@ -34,7 +34,6 @@ export default function Mode(props) {
     const handleClose = () => setOpen(false);
     const alunos = useSelector(selectAllAlunos)
     const status = useSelector(state => state.alunos.status);
-    const error = useSelector(state => state.alunos.error);
 
     const dispatch = useDispatch();
 
