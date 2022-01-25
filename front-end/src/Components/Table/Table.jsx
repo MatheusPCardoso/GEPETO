@@ -15,7 +15,7 @@ export default function _Table(props) {
 
     if (props.status == 'loading') {
         return (
-            
+
             <UIContainer className='container'>
                 <TableContainer component={Paper} id='tab'>
                     <Table className="table-hover" >
@@ -35,7 +35,7 @@ export default function _Table(props) {
                 </TableContainer>
 
                 <Button
-                    href="/dashboard"
+                    href={props.href}
                     variant="outlined"
                     style={{ marginTop: "2%" }}
                 >
@@ -46,7 +46,7 @@ export default function _Table(props) {
 
         )
     }
-    else if(props.person.length != 0) {
+    else if (props.person.length != 0) {
         return (
             <UIContainer>
                 <TableContainer component={Paper} >
@@ -67,12 +67,12 @@ export default function _Table(props) {
                                                 {row[title]}
                                             </TableCell>
                                             :
-                                            <TableCell className="others" align="center" contentEditable="true">
+                                            <TableCell className="others" align="center" ontentEditable="false">
                                                 {row[title]}
                                             </TableCell>
 
                                     ))}
-                                    
+
                                     {
                                         props.turma ?
                                             <ValidaPro turma={row.nome} />
@@ -95,29 +95,34 @@ export default function _Table(props) {
 
                                     </TableCell>
 
-                                    <TableCell align="right">
-                                        <Button
-                                            variant="contained"
-                                            color='error'
-                                            type="submit"
-                                            onClick={() => props.func1(row.id)}
-                                        >
-                                            Apagar
-                                        </Button>
+                                    <TableCell align="right" ontentEditable="false">
+                                        {
+                                            props.whoEdit == 'Professor' ?
+                                                ''
+                                                :
+                                                <Button
+                                                    variant="contained"
+                                                    color='error'
+                                                    type="submit"
+                                                    onClick={() => props.func1(row.id)}
+                                                >
+                                                    Apagar
+                                                </Button>
+                                        }
                                     </TableCell>
-                                    {props.person[0].alunos ? '' :
-                                        <TableCell>
-                                            <Mode2 row={row} whoEdit={props.whoEdit}/>
+                                    {props.person[0].alunos || props.whoEdit == 'Professor' ? '' :
+                                        <TableCell ontentEditable="false">
+                                            <Mode2 row={row} whoEdit={props.whoEdit} />
                                         </TableCell>}
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Button href="/dashboard" variant="outlined" style={{ marginTop: "2%" }}>Voltar</Button>
+                <Button href={props.href} variant="outlined" style={{ marginTop: "2%" }}>Voltar</Button>
             </UIContainer>
         )
-    } else {
+    } else if(props.person.length === 0){
         return (
             <UIContainer>
                 <TableContainer component={Paper} id='tab' >
@@ -129,7 +134,7 @@ export default function _Table(props) {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Button href="/dashboard" variant="outlined" style={{ marginTop: "2%" }}>Voltar</Button>
+                <Button href={props.href} variant="outlined" style={{ marginTop: "2%" }}>Voltar</Button>
             </UIContainer>
 
         )

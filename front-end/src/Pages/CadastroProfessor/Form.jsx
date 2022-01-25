@@ -31,7 +31,7 @@ export default function FormularioProfessor() {
             toast.error('Erro ao dar get na turma')
         }
     }, [status, dispatch])
-    
+
     useEffect(() => {
         if (statusP === 'not_loaded') {
             dispatch(fetchProfessores())
@@ -66,10 +66,10 @@ export default function FormularioProfessor() {
         var validado = false;
         var livre = true;
 
-        for(let j = 0; j < professores.length; j++){
-            if(professores[j].codTurma == data.codTurma){
+        for (let j = 0; j < professores.length; j++) {
+            if (professores[j].codTurma == data.codTurma) {
                 livre = false
-            }else {
+            } else {
                 livre = true
             }
         }
@@ -97,7 +97,7 @@ export default function FormularioProfessor() {
                 <div className="div-card">
                     <div className='container-card'>
                         <div>
-                            <h1 className="title">Cadastro de professor</h1>
+                            <h1 className="title" style={{ marginBottom: '2%' }}>Cadastro de professor</h1>
                         </div>
 
                         <div className="cadastro-form">
@@ -157,11 +157,16 @@ export default function FormularioProfessor() {
                             />
                         </div>
 
-                        <div style={{display: 'inline-block'}}>
-                            <NavLink to="/dashboard" className="btn btn-outline-primary me-md-2"><BiArrowBack /> Voltar</NavLink>
+                        <div style={{ display: 'inline-block', marginTop: '2%' }}>
+                            <button 
+                                type='button' 
+                                onClick={() => location.href = '/dashboard'}
+                                className="btn btn-outline-primary me-md-2">
+                                <BiArrowBack /> Voltar
+                            </button>
                         </div>
-                        <div style={{float:'right'}}>
-                            <button type="submit"  className="btn btn-primary me-md-2">Salvar</button>
+                        <div style={{ float: 'right', marginTop: '2%' }}>
+                            <button type="submit" className="btn btn-primary me-md-2">Salvar</button>
                         </div>
                     </div>
                 </div>

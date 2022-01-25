@@ -40,7 +40,8 @@ function ListaProfessores() {
         person={professores} 
         status={status} 
         func1={deletaProfessor}
-        whoEdit={'professores'}
+        whoEdit='professores'
+        href = '/dashboard'
       />
     
   )

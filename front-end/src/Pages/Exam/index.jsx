@@ -5,8 +5,9 @@ import './styles.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExamesById, selectExamesById, updateExameServer } from '../ExamesSlice';
 import { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button'
 
-export function Exam() {
+export function Exam(props) {
 
   const history = useHistory();
 
@@ -56,9 +57,16 @@ export function Exam() {
           return <Question key={num} dados={questao} onAnswer={handleAnswer}>{num}</Question>
         })}
         <div id="botao">
-          <button type="submit" className="botaoEnviar" onClick={enviarProva}>
-            Enviar
-          </button>
+          {
+            type == 'professores' ?
+              <Button type="button" variant="primary" onClick={() => location.href = '/dashboardp'}>
+                Home
+              </Button>
+              :
+              <button type="submit" className="botaoEnviar" onClick={enviarProva}>
+                Enviar
+              </button>
+          }
         </div>
       </form>
     </>

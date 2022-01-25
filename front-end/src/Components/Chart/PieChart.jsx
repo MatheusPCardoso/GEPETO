@@ -1,19 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfessores, selectAllProfessores } from "../../shared/ProfessoresSlice";
 import { fetchTurmas, selectAllTurmas } from "../../shared/TurmasSlice";
 import { fetchAlunos, selectAllAlunos } from "../../shared/AlunosSlice";
 import Spinner from "../spinner/spinner";
-import { fetchExames, selectAllExames } from "../../Pages/ExamesSlice";
-import { toast } from "react-toastify";
 
 
 
 export function PieChart(props) {
 
   const dispatch = useDispatch()
-
   const turmas = useSelector(selectAllTurmas)
   const statusTurma = useSelector(state => state.turmas.status);
 
@@ -21,7 +18,7 @@ export function PieChart(props) {
     if (statusTurma === 'not_loaded') {
       dispatch(fetchTurmas())
     } else if (statusTurma === 'failed') {
-      setTimeout(() => console.log('Algou deu errado!'));
+      setTimeout(() => console.log('statusTurma falhou'));
     }
   }, [statusTurma, dispatch])
 
@@ -32,7 +29,7 @@ export function PieChart(props) {
     if (statusProfessores === 'not_loaded') {
       dispatch(fetchProfessores())
     } else if (statusProfessores === 'failed') {
-      setTimeout(() => console.log('Algou deu errado!'));
+      setTimeout(() => console.log('statusProfessores falhou!'));
     }
   }, [statusProfessores, dispatch])
 
@@ -43,20 +40,9 @@ export function PieChart(props) {
     if (statusAlunos === 'not_loaded') {
       dispatch(fetchAlunos())
     } else if (statusAlunos === 'failed') {
-      console.log('algo deu errado!')
+      console.log('statusAlunos falhou')
     }
   }, [statusAlunos, dispatch])
-
-  const provas = useSelector(selectAllExames)
-  const statusProvas = useSelector(state => state.exames.status);
-
-  useEffect(() => {
-    if (statusProvas == 'not_loaded') {
-      dispatch(fetchExames())
-    } else {
-      toast.error('Algo deu errado com os exames!')
-    }
-  }, [statusProvas, dispatch])
 
 
   var dataTurmas = [
@@ -81,20 +67,33 @@ export function PieChart(props) {
     title: 'Alunos',
     is3D: true,
   };
-  const optionsExames = {
-    title: 'Provas',
-    is3D: true,
-  };
-
-  alunos.map(aluno => dataAlunos.push([aluno.nome, 1]))
-  turmas.map(turma => dataTurmas.push([turma.nome, 1]))
+  
+  alunos.map(aluno => {
+    if(props.turmaProfessor) {
+      if(props.turmaProfessor == aluno.turma){
+        dataAlunos.push([aluno.nome, 1])
+      }
+    }else{
+      dataAlunos.push([aluno.nome, 1])
+    }
+  })
+  turmas.map(turma => {
+    if(props.turmaProfessor) {
+      if(props.turmaProfessor == turma.nome){
+        dataTurmas.push([turma.nome, 1])
+      }
+    }else{
+      dataTurmas.push([turma.nome, 1])
+    }
+  })
   professores.map(professor => dataProfessores.push([professor.nome, 1]))
-
+  
   if (statusAlunos == 'loading' || statusProfessores == 'loading' || statusTurma == 'loading') {
     return (
       <Spinner customText='loading...' />
     )
-  } else {
+  }
+  else if (props.owner == 0) {
     return (
       <div style={{
         display: 'grid',
@@ -104,51 +103,69 @@ export function PieChart(props) {
         gridAutoRows: '450px',
         gridTemplateColumns: 'repeat(2, 700px)'
       }}>
-        {/* {
-          props.graficos.map((grafico) => {
-            <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
-              <Chart
-                chartType="PieChart"
-                data={grafico.data}
-                options={grafico.options}
-                width={"100%"}
-                height={"343px"}
-              />
-            </div>
-          })
-        } */}
+        <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
+          <Chart
+            chartType="PieChart"
+            data={dataAlunos}
+            options={optionsAlunos}
+            width={"100%"}
+            height={"343px"}
+          />
+        </div>
+        <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
+          <Chart
+            chartType="PieChart"
+            data={dataTurmas}
+            options={optionsTurmas}
+            width={"100%"}
+            height={"343px"}
+          />
+        </div>
+        <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
+          <Chart
+            chartType="PieChart"
+            data={dataProfessores}
+            options={optionsProfessores}
+            width={"100%"}
+            height={"343px"}
+            dataT
+          />
+        </div>
 
       </div>
     );
   }
+  else if (props.owner == 1) {
+    return (
+
+      <div style={{
+        display: 'grid',
+        marginLeft: '5%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gridAutoRows: '450px',
+        gridTemplateColumns: 'repeat(2, 700px)'
+      }}>
+        <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
+          <Chart
+            chartType="PieChart"
+            data={dataAlunos}
+            options={optionsAlunos}
+            width={"100%"}
+            height={"343px"}
+          />
+        </div>
+        <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
+          <Chart
+            chartType="PieChart"
+            data={dataTurmas}
+            options={optionsTurmas}
+            width={"100%"}
+            height={"343px"}
+          />
+        </div>
+      </div>
+    )
+  }
 
 }
-
-{/* <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
-            <Chart
-              chartType="PieChart"
-              data={dataAlunos}
-              options={optionsAlunos}
-              width={"100%"}
-              height={"343px"}
-            />
-          </div>
-          <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
-            <Chart
-              chartType="PieChart"
-              data={dataTurmas}
-              options={optionsTurmas}
-              width={"100%"}
-              height={"343px"}
-            />
-          </div>
-          <div style={{ maxWidth: '600px', boxShadow: '5px 5px 5px #A9A9A9	' }}>
-            <Chart
-              chartType="PieChart"
-              data={dataProfessores}
-              options={optionsProfessores}
-              width={"100%"}
-              height={"343px"}
-              dataT
-            />
-          </div> */}

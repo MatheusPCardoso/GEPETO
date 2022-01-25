@@ -36,25 +36,25 @@ export default function FormularioAluno() {
     function sendStudentNClass(aluno, turma) {
         console.log('entrou aqui')
         try {
-        dispatch(addAlunoServer(aluno))
-            .then((res) => {
-                
+            dispatch(addAlunoServer(aluno))
+                .then((res) => {
+
                     let temp = { alunos: {}, who: 'aluno' }
                     temp.alunos = res.payload.nome
                     temp = Object.assign({}, turma, temp)
                     dispatch(AddTurmaAlunoServer(temp))
                         .then((res) => {
-                            if(res.error){
+                            if (res.error) {
                                 toast.error('Algo deu errado!')
-                            }else{
+                            } else {
                                 toast.success('Aluno inserido com sucesso!', {
                                     position: toast.POSITION.TOP_CENTER
                                 })
                             }
                         })
-            })
+                })
         }
-        catch{
+        catch {
             toast.error("Algo deu errado!")
         }
     }
@@ -72,8 +72,6 @@ export default function FormularioAluno() {
             }
         }
 
-
-
     }
 
     return (
@@ -83,7 +81,7 @@ export default function FormularioAluno() {
                 <div className="div-card">
                     <div className='container-card'>
                         <div>
-                            <h1 className="title" style={{marginBottom: '2%'}}>Cadastro do aluno</h1>
+                            <h1 className="title" style={{ marginBottom: '2%' }}>Cadastro do aluno</h1>
                         </div>
 
                         <div className="cadastro-form">
@@ -139,11 +137,16 @@ export default function FormularioAluno() {
                             />
                         </div>
 
-                        <div style={{display: 'inline-block', marginTop: '2%'}}>
-                            <NavLink to="/dashboard" className="btn btn-outline-primary me-md-2"><BiArrowBack /> Voltar</NavLink>
+                        <div style={{ display: 'inline-block', marginTop: '2%' }}>
+                            <button
+                                type='button'
+                                onClick={() => location.href = '/dashboard'} 
+                                className="btn btn-outline-primary me-md-2">
+                                    <BiArrowBack /> Voltar
+                            </button>
                         </div>
-                        <div style={{float:'right', marginTop: '2%'}}>
-                            <button type="submit"  className="btn btn-primary me-md-2">Salvar</button>
+                        <div style={{ float: 'right', marginTop: '2%' }}>
+                            <button type="submit" className="btn btn-primary me-md-2">Salvar</button>
                         </div>
                     </div>
                 </div>

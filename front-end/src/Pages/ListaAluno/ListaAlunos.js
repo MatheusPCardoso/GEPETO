@@ -41,6 +41,7 @@ function ListaAluno() {
         status={status}
         func1={deletaAluno}
         whoEdit='Alunos'
+        href = '/dashboard'
       />
 
   )

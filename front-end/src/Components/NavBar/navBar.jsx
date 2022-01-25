@@ -24,7 +24,7 @@ export function NavBar(props) {
     const loggedIn = () => user;
 
     return (
-        <div>
+        <div hidden={isProf()}>
             <Navbar bg="dark" expand="lg" variant="dark" hidden={isEscola()}>
                 <Container >
 
@@ -36,13 +36,13 @@ export function NavBar(props) {
                             <Nav.Link hidden={!loggedIn() || isAluno() || isEscola()}>
                                 <NavLink to="/prova/criar" style={{ textDecoration: 'none' }}>Criar Prova</NavLink>
                             </Nav.Link>
-                            <Nav.Link hidden={!loggedIn() || isEscola()}>
+                            <Nav.Link hidden={!loggedIn() || isEscola() || isProf()}>
                                 <NavLink to="/provas" style={{ textDecoration: 'none' }}>Provas</NavLink>
                             </Nav.Link>
                             <Nav.Link hidden={!loggedIn() || isAluno() || isProf()}>
                                 <NavLink to="/cadastro/alunos" style={{ textDecoration: 'none' }}>Cadastro de alunos</NavLink>
                             </Nav.Link>
-                            <Nav.Link hidden={!loggedIn() || isEscola()}>
+                            <Nav.Link hidden={!loggedIn() || isEscola() || isProf()}>
                                 <NavLink to="/resultado" style={{ textDecoration: 'none' }}>Resultado</NavLink>
                             </Nav.Link>
                         </Nav>

@@ -45,6 +45,17 @@ export default function Mode(props) {
         }
     }, [status, dispatch])
 
+    if(props.professorTurma){
+        var arrayAlunos = []
+        alunos.map(aluno => {
+            if(aluno.turma == props.professorTurma){
+                arrayAlunos.push(aluno)
+            }
+        })
+        alunos = arrayAlunos;
+        console.log(alunos)
+    }
+
     if (alunos.length != 0) {
         return (
 

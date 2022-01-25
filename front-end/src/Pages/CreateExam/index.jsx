@@ -31,12 +31,16 @@ export const CreateExam = (props) => {
             toast.success('Prova criada com sucesso!', {
                 position: toast.POSITION.TOP_CENTER
             });
-            history.push(`/dashboardp`);
+            location.href = '/dashboardp'
         });
     }
 
     const handleNameChange = (event) => {
         setNomeProva(event.target.value);
+    }
+
+    const handleRedirect = () => {
+        salvarProva()
     }
 
     return (
@@ -52,7 +56,7 @@ export const CreateExam = (props) => {
                 })}
                 <NewQuestion createNewQuestion={addQuestion} isEditing={true}>{questoes.length + 1}</NewQuestion>
             </div>
-            <button type="button" className="btn btn-primary float-end" onClick={() => salvarProva()}>Salvar</button>
+            <button type="button" className="btn btn-primary float-end" onClick={() => handleRedirect()}>Salvar</button>
         </div>
     );
 }

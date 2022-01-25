@@ -22,15 +22,14 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:username', async (req, res) => {
-    await Professores.find({username: req.params.username}, (err, data) => {
-      if(err){
-        res.status(404).send(err);
-      }
-      else{
-        res.status(200).json(data)
-      }
-    })
+router.get('/:username', async (req, res, next) => {
+  
+   Professores.find({username: req.params.username}).then((resp) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+   }, (err) => next(err))
+   .catch((err) => next(err));   
 })
 
 

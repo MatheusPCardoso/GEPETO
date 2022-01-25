@@ -41,7 +41,7 @@ export function Question({ dados, isEditing, onAnswer, children }) {
         const temResposta = dados.resposta;
         return (
           <>
-            <textarea rows="3" className={`resposta${temResposta ? '-certa' : ''}`} 
+            <textarea style={{padding: '10px'}} rows="3" className={`resposta${temResposta ? '-certa' : ''}`} 
               readOnly={isEditing} disabled={isEditing}
               onChange={handleAnswerQuestion}
               defaultValue={dados.resposta}>
@@ -58,7 +58,7 @@ export function Question({ dados, isEditing, onAnswer, children }) {
                     const res = indice === dados.resposta;
                     return (
                       <label key={indice} className={res ? 'resposta-certa' : ''}>
-                        <input type="radio" name='optradio' id={indice} defaultChecked={res} onChange={handleAnswerQuestion} />
+                        <input style={{marginRight: '5px'}} type="radio" name='optradio' id={indice} defaultChecked={res} onChange={handleAnswerQuestion} />
                         {valor}
                       </label>
                     );

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState} from "react";
 
 import { fetchProfessorUser } from "../../shared/ProfessoresSlice";
 import { selectAllAlunos, fetchAlunos } from "../../shared/AlunosSlice";
 
-import { SiGoogleclassroom, SiGitbook } from "react-icons/si";
+import { SiGoogleclassroom, SiGitbook, SiBookstack, SiHomeassistant } from "react-icons/si";
 import Sidebar from '../../Components/sideBar/SideBar'
 
 import { PieChart } from '../../Components/Chart/PieChart';
@@ -12,10 +12,14 @@ import { useDispatch, useSelector } from "react-redux";
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import 'react-toastify/dist/ReactToastify.css'
 
+import ListaAlunosProfessor from "./ListaAlunosProfessor";
+import { CreateExam } from "../CreateExam";
+import { Provas } from '../Provas/index'
+
 export default function DashboardNavbar() {
-    var professor = {}
+    var [view, setView] = useState(0)
+    const [professor, setProfessor] = useState('')
     const dispatch = useDispatch();
-    const arrayAlunos = [];
     const alunos = useSelector(selectAllAlunos)
     const statusAlunos = useSelector(state => state.alunos.status);
 
@@ -23,50 +27,31 @@ export default function DashboardNavbar() {
         if (statusAlunos === 'not_loaded') {
             dispatch(fetchAlunos())
         } else if (statusAlunos === 'failed') {
-            console.log('algo deu errado!')
+            console.log('Status alunos falhou!')
         }
     }, [statusAlunos, dispatch])
 
-
-    const optionsExames = {
-        title: 'Provas',
-        is3D: true,
-    };
-
-    const optionsAlunos = {
-        title: 'Alunos',
-        is3D: true,
-    };
-
     dispatch(fetchProfessorUser(localStorage.getItem('usuario')))
         .then(res => {
-            professor = res.payload[0]
+            setProfessor(res.payload[0].codTurma)
         })
 
-
-    alunos.map(aluno => {
-        if(aluno.turma == professor.codTurma){
-            arrayAlunos.push([alunos.nome, 1])
-        }
-    })
-
-
-    console.log(123)
-
-
     const data = [
-        { href: '/prova/criar', name: 'Criar prova', icon: <SiGitbook /> },
-        { href: '/turma', name: 'Ver turma', icon: <SiGoogleclassroom /> },
-        { href: '/', name: 'Ver turma', icon: <SiGoogleclassroom /> },
+        { href: '/dashboardp', name: 'Home', id: 0, icon: <SiHomeassistant /> },
+        { href: '/prova/criar', name: 'Criar prova', id: 2, icon: <SiGitbook /> },
+        { href: '/turma', name: 'Ver turma', id: 1, icon: <SiGoogleclassroom /> },
+        { href: '/professor/provas', name: 'Ver provas', id: 3, icon: <SiBookstack /> },
     ]
 
-
-
-
-
+    var arrayLinks = [
+        <PieChart owner={1} turmaProfessor = {professor}/>,
+        <ListaAlunosProfessor alunos={alunos} stateAlunos={statusAlunos} professor={professor}/>,
+        <CreateExam />,
+        <Provas />
+    ]
     return (
         <div>
-            <Sidebar data={data} dashboard={<PieChart graficos={{ data: 'dataAlunos', options: 'optionsAlunos' }} />} />
+            <Sidebar data={data} func={setView} dashboard={arrayLinks[view]} />
         </div>
     );
 

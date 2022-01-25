@@ -37,6 +37,7 @@ function ListaTurma(props) {
       func1={deletaTurma} 
       func2={turmas}
       turma={true}
+      href = '/dashboard'
     />
   )
 

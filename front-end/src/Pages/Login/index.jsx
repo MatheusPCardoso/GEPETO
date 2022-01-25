@@ -27,7 +27,7 @@ export const Login = (props) => {
             await login(user.username, user.password).then(res => {
                 const loggedIn = res.data.token;
                 if (type == "alunos") {
-                    redirectUrl = '/provas';
+                    redirectUrl = '/dashboarda';
                 }
                 else if (type == "professores") {
                     redirectUrl = '/dashboardp';

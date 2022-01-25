@@ -17,8 +17,8 @@ const Sidebar = (props) => {
                     {
                         props.data.map((data) => {
                             return (
-                                <li>
-                                    <a href={data.href}>
+                                <li key={data.name}>
+                                    <a onClick={() => props.func(data.id)}>
                                         <div className="imagem">
                                             {data.icon}
                                         </div>

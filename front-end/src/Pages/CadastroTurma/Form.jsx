@@ -67,7 +67,7 @@ export default function FormularioTurma() {
 
                     <div className='container-card'>
                         <div>
-                            <h1 className="title">Cadastro de turma</h1>
+                            <h1 className="title" style={{ marginBottom: '2%' }} >Cadastro de turma</h1>
                         </div>
 
                         <div className="cadastro-form">
@@ -124,11 +124,18 @@ export default function FormularioTurma() {
                             />
                         </div>
 
-                        <div style={{display: 'inline-block'}}>
-                            <NavLink to="/dashboard" className="btn btn-outline-primary me-md-2"><BiArrowBack /> Voltar</NavLink>
+                        <div style={{ display: 'inline-block', marginTop: '2%' }}>
+                            <button 
+                                type='button' 
+                                onClick={() => location.href = '/dashboard'} 
+                                className="btn btn-outline-primary me-md-2"
+                            >
+                                    
+                                    <BiArrowBack /> Voltar
+                            </button>
                         </div>
-                        <div style={{float:'right'}}>
-                            <button type="submit"  className="btn btn-primary me-md-2">Salvar</button>
+                        <div style={{ float: 'right', marginTop: '2%' }}>
+                            <button type="submit" className="btn btn-primary me-md-2">Salvar</button>
                         </div>
                         
                     </div>
