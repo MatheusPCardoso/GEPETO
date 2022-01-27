@@ -24,7 +24,7 @@ export function NavBar(props) {
     const loggedIn = () => user;
 
     return (
-        <div hidden={isProf()}>
+        <div hidden={isProf() || isAluno()}>
             <Navbar bg="dark" expand="lg" variant="dark" hidden={isEscola()}>
                 <Container >
 

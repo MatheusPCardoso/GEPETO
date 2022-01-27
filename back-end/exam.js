@@ -2,56 +2,6 @@ const express = require('express');
 const Prova = require('./models/exam');
 const router = express.Router();
 
-let provas = [
-{
-    "questoes": [
-      {
-        "pergunta": "Quem descobriu o Brasil?",
-        "tipo": 2,
-        "options": [
-          "Pedro Alvares Cabral",
-          "Cristovao Colombo",
-          "Americo Vespucio",
-          "Nabucodonosor"
-        ]
-      },
-      {
-        "pergunta": "Quanto é a raiz quadrada de 169?",
-        "tipo": 1,
-        "options": []
-      },
-      {
-        "pergunta": "Marque as alternativas corretas sobre o ornitorrinco:",
-        "tipo": 3,
-        "options": [
-          "É mamífero",
-          "Bota ovos",
-          "Voa",
-          "Vive na água"
-        ]
-      }
-    ],
-    "nomeProva": "Prova 1",
-    "id": 1,
-    "respostas": [
-      {
-        "1": {
-          "1": [
-            "0"
-          ],
-          "2": [
-            "13"
-          ],
-          "3": [
-            "0",
-            "2",
-            "3"
-          ]
-        }
-      }
-    ]
-  }
-];
 
 router.post('/', (req, res) => {
     if(req.body){

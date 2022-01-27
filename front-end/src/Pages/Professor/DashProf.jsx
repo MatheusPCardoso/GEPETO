@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import ListaAlunosProfessor from "./ListaAlunosProfessor";
 import { CreateExam } from "../CreateExam";
-import { Provas } from '../Provas/index'
+import Provas from '../Provas/index'
 
 export default function DashboardNavbar() {
     var [view, setView] = useState(0)

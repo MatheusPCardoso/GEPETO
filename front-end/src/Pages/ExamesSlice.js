@@ -2,9 +2,7 @@ import {createSlice, createAsyncThunk, createEntityAdapter} from '@reduxjs/toolk
 import {httpDelete, httpGet, httpPut, httpPost} from '../shared/utils'
 import {baseUrl} from '../shared/baseUrl';
 
-const examesAdapter = createEntityAdapter({
-    selectId: (model) => model._id
-});
+const examesAdapter = createEntityAdapter();
 
 const initialState = examesAdapter.getInitialState({
     status: 'not_loaded',
