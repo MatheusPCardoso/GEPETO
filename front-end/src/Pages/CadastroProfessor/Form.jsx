@@ -69,6 +69,7 @@ export default function FormularioProfessor() {
         for (let j = 0; j < professores.length; j++) {
             if (professores[j].codTurma == data.codTurma) {
                 livre = false
+                break
             } else {
                 livre = true
             }
@@ -82,8 +83,14 @@ export default function FormularioProfessor() {
             }
         }
 
-        if (!validado) {
-            toast.error('Turmas já tem professor alocado!', {
+        if (data.codTurma == 'Select') {
+            toast.warning('Selecione uma turma para o professor!', {
+                position: toast.POSITION.TOP_CENTER
+            })
+            validado = true
+        }
+        else if(!validado){
+            toast.error('Turma selecionada já tem professor alocado.', {
                 position: toast.POSITION.TOP_CENTER
             })
         }

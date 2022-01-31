@@ -15,7 +15,7 @@ export const ExamResult = () => {
                     </p>
 
                     <p className="lead">
-                        <NavLink className="ver-provas btn btn-lg btn-secondary fw-bold border-white bg-white" to="/provas">Ver Provas</NavLink>
+                        <NavLink className="ver-provas btn btn-lg btn-secondary fw-bold border-white bg-white" to="/dashboarda">Home</NavLink>
                     </p>
                 </main>
                 <footer className="mt-auto text-white-50">

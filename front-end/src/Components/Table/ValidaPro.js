@@ -10,7 +10,6 @@ export default function ValidaPro(props) {
     var existe = 'Sem professor';
 
     const dispatch = useDispatch();
-    console.log(professores)
     useEffect(() => {
         if (status === 'not_loaded') {
             dispatch(fetchProfessores())
@@ -20,7 +19,6 @@ export default function ValidaPro(props) {
     }, [status, dispatch])
 
     professores.forEach(professor => {
-        console.log(props.turma, professor.codTurma)
         if (professor.codTurma == props.turma) {
             existe = professor.nome
         }

@@ -25,7 +25,6 @@ router.post('/login', async (req, res, next) => {
             usuario = await Escola.findOne({'username': user});
             break;
     }
-    console.log(usuario);
     if (usuario && usuario.username == user && usuario.password == pass) {
         const token = jwt.sign({ usuario }, process.env.SECRET, {
             expiresIn: 30000 

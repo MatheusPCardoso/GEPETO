@@ -1,19 +1,16 @@
-
 const express = require('express');
 const router = express.Router();
 const Turmas = require('./models/turmas');
 
 
-
-
-router.route('/').get(async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const turmasBanco = await Turmas.find({});
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json(turmasBanco);
   } catch (err) {
-    res.status(404).json({ msg: 'Algo deu errado!', response });
+    res.status(500).json({ messege: 'Erro no servidor' });
   }
 })
 router.post('/', (req, res, next) => {

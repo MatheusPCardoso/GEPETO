@@ -1,26 +1,26 @@
+//imports
 import React  from 'react';
 import _Table from '../../Components/Table/Table'
 
-
 export default function ListaAlunosProfessor(props) {
 
-  var arrayAlunos = []
-  var alunos = props.alunos
+  //variavel que receberá alunos da turma do professor
+  var arrayAlunos = [];
 
-  alunos.map(aluno => {
+  //loop procurando alunos pertencentes a turma do professor
+  props.alunos.map(aluno => {
     if (props.professor == aluno.turma) {
       arrayAlunos.push(aluno)
     }
-    alunos = arrayAlunos
   })
   
-
+  //cliando uma table para listar esse alunos passando algumas variaveis
   return (
     
     <_Table
-      title={['Turma', 'Username', 'Nome']}
+      title={['Turma', 'Username', 'Nome', '', '']}
       row={['turma', 'username', 'nome']}
-      person={alunos}
+      person={arrayAlunos}
       status={props.statusAlunos}
       whoEdit='Professor'
       href='/dashboardp'

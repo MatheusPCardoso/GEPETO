@@ -19,7 +19,6 @@ export const Login = (props) => {
         try{
 
         if(user && user.username){
-            console.log('tem usuario')
             type = user.username.split('@')[1].split('.com')[0];
         }
         

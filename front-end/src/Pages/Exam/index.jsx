@@ -3,7 +3,7 @@ import { Question } from '../../Components/Question';
 import { useHistory, useParams } from 'react-router-dom';
 import './styles.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchExamesById, selectExamesById, updateExameServer } from '../ExamesSlice';
+import { fetchExamesById, selectAllExames, selectExamesById, updateExameServer } from '../ExamesSlice';
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button'
 
@@ -20,14 +20,21 @@ export function Exam(props) {
   const [answers, setAnswers] = useState({});
 
   const status = useSelector((state) => state.exames.status);
-  const exame = useSelector((state) => selectExamesById(state, id));
+  const exames = useSelector(selectAllExames)
+  var exame;
+
+  exames.forEach(exa => {
+      if(exa._id == id){
+        exame = exa
+      }
+  });
 
   useEffect(() => {
     if (status === 'not_loaded' || status === 'saved') {
       dispatch(fetchExamesById(id));
     }
   }, [status]);
-
+  
   const questoes = exame?.questoes ?? [];
 
   const handleAnswer = (res, num) => {

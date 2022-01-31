@@ -1,22 +1,21 @@
-
+//imports
 import React, { useEffect } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteAlunoServer, fetchAlunos, selectAllAlunos } from '../../shared/AlunosSlice'
-
-
 import './ListaAlunos.css'
 import _Table from '../../Components/Table/Table';
 import { toast } from 'react-toastify';
 
-function ListaAluno() {
 
+function ListaAluno() {
+  //constantes que armazenarão os professores e o status da const professores (loaded, not_loaded, loading ou failed)
   const alunos = useSelector(selectAllAlunos)
   const status = useSelector(state => state.alunos.status);
-
+  //Alocando useDispach em const para reutilizar
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //valida se o status está como não carregado
     if (status === 'not_loaded') {
       dispatch(fetchAlunos())
     } else if (status === 'failed') {
@@ -35,7 +34,7 @@ function ListaAluno() {
   }
 
   return (
-      <_Table title={['Turma', 'Username', 'Nome']}
+      <_Table title={['Turma', 'Username', 'Nome',' ', ' ', ' ']}
         row={['turma', 'username', 'nome']}
         person={alunos}
         status={status}

@@ -1,28 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import './index.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchExames, selectAllExames } from '../ExamesSlice';
+//imports
+import React, { useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Spinner from '../../Components/spinner/spinner';
 import img from '../../assets/images/nothing.png'
 import icon from '../../assets/images/tg.png'
-import Spinner from '../../Components/spinner/spinner';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchExames, selectAllExames } from '../ExamesSlice';
+
 
 function Provas() {
-
+    //Alocando useDispach em const para reutilizar
     const dispatch = useDispatch()
+    //Alocando todas as provas na const exames
     const exames = useSelector(selectAllExames)
+    //Alocando o status dos exames (loaded, not_loaded, loading ou failed)
     const status = useSelector(state => state.exames.status);
 
+    //Verifica se o status das provas estão como não carregados
     useEffect(() => {
         if (status === 'not_loaded') {
+            //Usa o dispatch para dar um GET nos exames
             dispatch(fetchExames())
         }
     }, [status, dispatch]);
 
-
-
+    
+    //Irá retornar esse HTML caso houver alguma prova criada
     if (exames.length) {
         return (
             <>
@@ -66,11 +71,13 @@ function Provas() {
 
         )
     }
+    //Irá retornar esse HTML caso o status for igual a carregando
     else if (status === 'loading') {
         return (
             <Spinner customText='Loading...' />
         )
     }
+    //Irá retornar esse HTML caso nenhuma das condições acima forem satisfeitas
     else {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', margin: '5%' }}>

@@ -53,7 +53,6 @@ export default function Mode(props) {
             }
         })
         alunos = arrayAlunos;
-        console.log(alunos)
     }
 
     if (alunos.length != 0) {
@@ -85,7 +84,7 @@ export default function Mode(props) {
                                                     </TableCell>
 
                                                 :
-                                                console.log(props.turma)
+                                                ''
                                         ))}
 
                                     </TableRow>
