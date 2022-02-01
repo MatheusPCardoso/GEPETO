@@ -16,6 +16,8 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
-    npm start
+    react-scripts start
+    react-scripts build
+    react-scripts test
+    react-scripts eject
   displayName: 'npm install and build'
